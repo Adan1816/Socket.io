@@ -47,19 +47,19 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg, result.lastID);
   });
 
-  if (!socket.recovered) {
-    // if the connection state recovery was not successful
-    try {
-      await db.each('SELECT id, content FROM messages WHERE id > ?',
-        [socket.handshake.auth.serverOffset || 0],
-        (_err, row) => {
-          socket.emit('chat message', row.content, row.id);
+    if (!socket.recovered) {
+        // if the connection state recovery was not successful
+        try {
+        await db.each('SELECT id, content FROM messages WHERE id > ?',
+            [socket.handshake.auth.serverOffset || 0],
+            (_err, row) => {
+            socket.emit('chat message', row.content, row.id);
+            }
+        )
+        } catch (e) {
+        // something went wrong
         }
-      )
-    } catch (e) {
-      // something went wrong
     }
-  }
 });
 
 server.listen(3000, () => {

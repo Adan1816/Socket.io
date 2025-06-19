@@ -23,11 +23,12 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+
     const socket = io({
-    auth: {
-      serverOffset: 0
-    }
-  });
+        auth: {
+        serverOffset: 0
+        }
+    });
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
